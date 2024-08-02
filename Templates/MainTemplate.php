@@ -102,7 +102,7 @@ class MainTemplate {
                     </table>
                 </form>
                 <h1> Previous Games</h1>
-                    { $table }
+                    $table
                 </body>
             </html>
         HTML;
