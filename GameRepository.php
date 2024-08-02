@@ -25,7 +25,7 @@ class GameRepository
         ];
         $games = $this->getGames();
         $games[] = $game;
-        file_put_contents($this->fileName, $games);
+        file_put_contents($this->fileName, json_encode($games));
     }
     public function getGames(): array
     {
