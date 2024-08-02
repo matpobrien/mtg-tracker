@@ -1,9 +1,7 @@
 <?php
 
 class MainTemplate {
-    private array $games;
-    public function __construct(array $games) {
-        $this->games = $games;
+    public function __construct() {
     }
 
     public function renderTable(array $games): string {
@@ -42,7 +40,7 @@ class MainTemplate {
         return $html;
     }
     
-    public function render(): string
+    public function render(array $games): string
     {
         $table = $this->renderTable($this->games);
         return <<<HTML
@@ -67,7 +65,7 @@ class MainTemplate {
                 </head>
                 <body>
                 <h1>Add a game</h1>
-                <form action='GameController.php' method='post'>
+                <form method='post'>
                     <table>
                         <tr>
                             <td>
@@ -108,9 +106,5 @@ class MainTemplate {
                 </body>
             </html>
         HTML;
-    }
-    
-    public function __toString() {
-        return $this->render();
     }
 }

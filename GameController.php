@@ -1,26 +1,34 @@
 <?php
 
+include_once __DIR__ . '/Templates/MainTemplate.php';
+include_once __DIR__ . '/GameRepository.php';
+
 class GameController
 {
-    public function __construct() {}
+    private MainTemplate $template;
+    public function __construct(
+        protected readonly GameRepository $gameRepository,
+    ) {
+        $this->template = new MainTemplate();
+    }
     
-    public function addGame(): void
+    public function addGame(): string
     {
-        
         if (isset($_POST['button'])
         ) {
             $fileName = $_SERVER['DOCUMENT_ROOT'] . '/games.json';
             
             file_put_contents($fileName, $this->getPostData($fileName));
         }
+        
+        return $this->getGames();
     }
     
-    public function getGames()
+    public function getGames(): string
     {
-        $fileName = $_SERVER['DOCUMENT_ROOT'] . '/games.json';
-        $json = file_get_contents($fileName);
-        
-        return json_decode($json);
+        return $this->template->render(
+            $this->gameRepository->getGames()
+        );
     }
     
     private function getPostData($fileName): bool | string

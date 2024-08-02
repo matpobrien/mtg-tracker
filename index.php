@@ -1,13 +1,14 @@
 <?php
 
-$gameController = new GameController();
+include_once __DIR__ . '/Templates/MainTemplate.php';
+include_once __DIR__ . '/GameController.php';
+include_once __DIR__ . '/GameRepository.php';
+
+$gameRepository = new GameRepository();
+$gameController = new GameController($gameRepository);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $gameController->addGame();
+    echo $gameController->addGame();
 } else {
-    $games = $gameController->getGames();
+    echo $gameController->getGames();
 }
-
-$template = new MainTemplate($games);
-
-echo $template;
