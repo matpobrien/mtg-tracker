@@ -42,7 +42,7 @@ class MainTemplate {
     
     public function render(array $games): string
     {
-        $table = $this->renderTable($this->games);
+        $table = $this->renderTable($games);
         return <<<HTML
             <html lang=''>
                 <head>
