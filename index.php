@@ -1,11 +1,11 @@
 <?php
 
-include_once __DIR__ . '/Templates/MainTemplate.php';
-include_once __DIR__ . '/GameController.php';
-include_once __DIR__ . '/GameRepository.php';
+include_once __DIR__ . '/Template/MainTemplate.php';
+include_once __DIR__ . '/Controller/GameController.php';
+include_once __DIR__ . '/Repository/GameRepository.php';
 
 $config = [
-    'fileName' => __DIR__ . '/games.json',
+'fileName' => __DIR__ . '/games.json',
 ];
 $gameRepository = new GameRepository($config['fileName']);
 $gameController = new GameController($gameRepository);

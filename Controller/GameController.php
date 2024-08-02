@@ -16,9 +16,9 @@ class GameController
     {
         if (isset($_POST['button'])
         ) {
-            $fileName = __DIR__ . '/games.json';
-            $postData = $this->getPostData($fileName);
+            $postData = $this->getPostData();
             
+            // just store user that creates the game
             $this->gameRepository->addGame(
                 $postData['myDeck'],
                 $postData['opponentsDeck'],
