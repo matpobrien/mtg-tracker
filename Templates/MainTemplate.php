@@ -42,10 +42,10 @@ class MainTemplate {
         return $html;
     }
     
-    public function render(): void
+    public function render(): string
     {
         $table = $this->renderTable($this->games);
-        echo <<<HTML
+        return <<<HTML
             <html lang=''>
                 <head>
                     <style>
@@ -108,5 +108,9 @@ class MainTemplate {
                 </body>
             </html>
         HTML;
+    }
+    
+    public function __toString() {
+        return $this->render();
     }
 }
