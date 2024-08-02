@@ -1,14 +1,26 @@
 <?php
 
-class PostController
+class GameController
 {
-    function __invoke(): void
+    public function __construct() {}
+    
+    public function addGame(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['button'])) {
+        
+        if (isset($_POST['button'])
+        ) {
             $fileName = $_SERVER['DOCUMENT_ROOT'] . '/games.json';
             
             file_put_contents($fileName, $this->getPostData($fileName));
         }
+    }
+    
+    public function getGames()
+    {
+        $fileName = $_SERVER['DOCUMENT_ROOT'] . '/games.json';
+        $json = file_get_contents($fileName);
+        
+        return json_decode($json);
     }
     
     private function getPostData($fileName): bool | string
