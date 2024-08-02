@@ -16,9 +16,14 @@ class GameController
     {
         if (isset($_POST['button'])
         ) {
-            $fileName = $_SERVER['DOCUMENT_ROOT'] . '/games.json';
+            $fileName = __DIR__ . '/games.json';
+            $postData = $this->getPostData($fileName);
             
-            file_put_contents($fileName, $this->getPostData($fileName));
+            $this->gameRepository->addGame(
+                $postData['myDeck'],
+                $postData['opponentsDeck'],
+                $postData['didWin'],
+            );
         }
         
         return $this->getGames();
@@ -31,7 +36,7 @@ class GameController
         );
     }
     
-    private function getPostData($fileName): bool | string
+    private function getPostData(): array
     {
         $myDeck = htmlspecialchars($_POST['myDeck']);
         $opponentsDeck = htmlspecialchars($_POST['opponentsDeck']);
@@ -41,22 +46,11 @@ class GameController
             echo 'Invalid data!';
         }
         
-        $game = [
+        return [
                 'myDeck' => $myDeck,
                 'opponentsDeck' => $opponentsDeck,
                 'didWin' => $didWin,
                 'createdAt' => (new DateTime())->format('c'),
         ];
-        
-        $games = [];
-
-        if (file_exists($fileName)) {
-            $oldJson = file_get_contents($fileName);
-            $games = json_decode($oldJson);
-        }
-
-        $games[] = $game;
-        
-        return json_encode($games);
     }
 }
