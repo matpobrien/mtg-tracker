@@ -6,7 +6,7 @@ class MainTemplate {
         $this->games = $games;
     }
 
-    private static function renderTable(array $games): string {
+    public function renderTable(array $games): string {
         $rows = [];
         
         foreach ($games as $game) {
@@ -44,6 +44,7 @@ class MainTemplate {
     
     public function render(): void
     {
+        $table = $this->renderTable($this->games);
         echo <<<HTML
             <html lang=''>
                 <head>
@@ -103,7 +104,7 @@ class MainTemplate {
                     </table>
                 </form>
                 <h1> Previous Games</h1>
-                    { self::renderTable($this->games) }
+                    { $table }
                 </body>
             </html>
         HTML;
