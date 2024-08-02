@@ -2,10 +2,13 @@
 
 class GameRepository
 {
+    private string $fileName;
     public function __construct(string $fileName) {
         if (!file_exists($fileName)) {
             throw new RuntimeException('File doesn\'t exist');
         }
+        
+        $this->fileName = $fileName;
     }
     
     public function addGame(
@@ -26,8 +29,7 @@ class GameRepository
     }
     public function getGames(): array
     {
-        $fileName = __DIR__ . '/games.json';
-        $json = file_get_contents($fileName);
+        $json = file_get_contents($this->fileName);
         
         return json_decode($json);
     }
