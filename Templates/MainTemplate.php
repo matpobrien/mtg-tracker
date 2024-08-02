@@ -1,7 +1,7 @@
 <?php
 
 class MainTemplate {
-    private array $games = [];
+    private array $games;
     public function __construct(array $games) {
         $this->games = $games;
     }
@@ -42,7 +42,7 @@ class MainTemplate {
         return $html;
     }
     
-    public function render(array $games)
+    public function render(): void
     {
         echo <<<HTML
             <html lang=''>
