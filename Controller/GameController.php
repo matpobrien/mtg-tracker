@@ -1,7 +1,7 @@
 <?php
 
 include_once __DIR__ . '/Templates/MainTemplate.php';
-include_once __DIR__ . '/GameRepository.php';
+include_once __DIR__ . '/Repository/GameRepository.php';
 
 class GameController
 {
