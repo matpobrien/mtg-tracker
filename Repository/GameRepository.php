@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/Entity/Game.php';
+include __DIR__ . '/../Entity/Game.php';
 
 class GameRepository
 {
