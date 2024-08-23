@@ -57,6 +57,11 @@ class Game
     
     public function expose(): array
     {
-        return get_object_vars($this);
+        return [
+            'myDeck' => $this->getMyDeck(),
+            'opponentsDeck' => $this->getOpponentsDeck(),
+            'didWin' => $this->isDidWin(),
+            'createdAt' => $this->getCreatedAt()
+        ];
     }
 }
