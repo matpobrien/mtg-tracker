@@ -1,6 +1,6 @@
 <?php
 
-include_once '../Repository/UserRepository.php';
+include_once __DIR__ . '/Repository/UserRepository.php';
 
 class AuthenticationService
 {
