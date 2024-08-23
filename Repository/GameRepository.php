@@ -32,10 +32,8 @@ class GameRepository
             ->setDidWin($didWin)
             ->setCreatedAt(new DateTime());
         
-        $encodedGame = json_encode($game->expose());
-        
         $games = $this->getGames();
-        $games[] = $encodedGame;
+        $games[] = $game->expose();
         file_put_contents($this->fileName, json_encode($games));
     }
     public function getGames(): array
