@@ -55,13 +55,13 @@ class Game
         return $this->createdAt;
     }
     
-    public function expose(): array
+    public function toArray(): array
     {
         return [
             'myDeck' => $this->getMyDeck(),
             'opponentsDeck' => $this->getOpponentsDeck(),
             'didWin' => $this->isDidWin(),
-            'createdAt' => $this->getCreatedAt()
+            'createdAt' => $this->getCreatedAt()->format('c')
         ];
     }
 }

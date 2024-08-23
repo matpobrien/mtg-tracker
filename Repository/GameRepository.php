@@ -33,7 +33,7 @@ class GameRepository
             ->setCreatedAt(new DateTime());
         
         $games = $this->getGames();
-        $games[] = $game->expose();
+        $games[] = $game->toArray();
         file_put_contents($this->fileName, json_encode($games));
     }
     public function getGames(): array
