@@ -27,17 +27,19 @@ class UserRepository
     
     public function addUser(string $username, string $password)
     {
-//        $user = (new User)
-//            ->setUsername($username)
-//            ->setPassword($password);
+        $user = (new User)
+            ->setUsername($username)
+            ->setPassword($password);
+        $encodedUser = json_encode($user->expose());
         
-        $user = [
-            'username' => $username,
-            'password' => $password
-        ];
+        
+//        $user = [
+//            'username' => $username,
+//            'password' => $password
+//        ];
         
         $users = $this->getUsers();
-        $users[] = $user;
+        $users[] = $encodedUser;
         file_put_contents($this->fileName, json_encode($users));
     }
 }

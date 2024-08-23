@@ -19,20 +19,23 @@ class GameRepository
         bool $didWin,
     ): void
     {
-        $game = [
-            'myDeck' => $myDeck,
-            'opponentsDeck' => $opponentsDeck,
-            'didWin' => $didWin,
-            'createdAt' => (new DateTime())->format('c'),
-        ];
+//        $game = [
+//            'myDeck' => $myDeck,
+//            'opponentsDeck' => $opponentsDeck,
+//            'didWin' => $didWin,
+//            'createdAt' => (new DateTime())->format('c'),
+//        ];
         
-//        $game = (new Game())
-//            ->setMyDeck($myDeck)
-//            ->setOpponentsDeck($opponentsDeck)
-//            ->setDidWin($didWin)
-//            ->setCreatedAt((new DateTime())->format('c'));
+        $game = (new Game())
+            ->setMyDeck($myDeck)
+            ->setOpponentsDeck($opponentsDeck)
+            ->setDidWin($didWin)
+            ->setCreatedAt(new DateTime());
+        
+        $encodedGame = json_encode($game->expose());
+        
         $games = $this->getGames();
-        $games[] = $game;
+        $games[] = $encodedGame;
         file_put_contents($this->fileName, json_encode($games));
     }
     public function getGames(): array

@@ -16,13 +16,13 @@ $userRepository = new UserRepository($config['usersFileName']);
 $userController = new UserController($userRepository);
 $jwt = null;
 
-if (isset($jwt))
-{
+//if (isset($jwt))
+//{
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $gameController->addGame();
     } else {
         echo $gameController->getGames();
     }
-}
+//}
 
-echo $userController->login();
+//echo $userController->login();

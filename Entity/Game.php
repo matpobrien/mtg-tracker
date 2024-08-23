@@ -43,17 +43,20 @@ class Game
         return $this->didWin;
     }
     
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         
         return $this;
     }
     
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
     
-    
+    public function expose(): array
+    {
+        return get_object_vars($this);
+    }
 }
