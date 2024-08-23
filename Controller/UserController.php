@@ -1,7 +1,7 @@
 <?php
 
-include_once __DIR__ . '/Template/LoginTemplate.php';
-include_once __DIR__ . '/Repository/UserRepository.php';
+include_once '../Template/LoginTemplate.php';
+include_once '../Repository/UserRepository.php';
 class UserController
 {
     private LoginTemplate $template;
