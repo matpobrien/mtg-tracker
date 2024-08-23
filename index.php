@@ -12,8 +12,8 @@ $config = [
 ];
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
-$userRepository = new UserRepository($config['usersFileName']);
-$userController = new UserController($userRepository);
+//$userRepository = new UserRepository($config['usersFileName']);
+//$userController = new UserController($userRepository);
 $jwt = null;
 
 //if (isset($jwt))
