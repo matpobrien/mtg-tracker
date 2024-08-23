@@ -31,14 +31,26 @@ class Game
         return $this->opponentsDeck;
     }
     
-    public function setDidWin(DateTime $createdAt): self
+    public function setDidWin(bool $didWin): self
+    {
+        $this->didWin = $didWin;
+        
+        return $this;
+    }
+    
+    public function isDidWin(): bool
+    {
+        return $this->didWin;
+    }
+    
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         
         return $this;
     }
     
-    public function getDidWin(): DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
