@@ -9,13 +9,13 @@ class AuthenticationService
         protected readonly UserRepository $userRepository
     ){}
 
-    public function authenticate(string $username, string $password)
+    public function authenticate(string $username, string $password): bool
     {
         $users = $this->userRepository->getUsers();
         $user = (
             (new User())
                 ->setUsername($username)
-                ->setPassword($password)
+                ->setPassword(password_hash($password, PASSWORD_DEFAULT))
         )->expose();
         if (in_array($user, $users, true)) {
             return setcookie('jwt', $this->generateJwt($username));

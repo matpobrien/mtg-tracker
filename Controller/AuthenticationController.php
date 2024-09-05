@@ -12,6 +12,18 @@ class AuthenticationController
         $this->template = new LoginTemplate();
     }
     
+    public function login(): bool
+    {
+        if (!isset($_POST['login'])) {
+            return false;
+        }
+        
+        return $this->authService->authenticate(
+            $_POST['login']['username'],
+            $_POST['login']['password']
+        );
+    }
+    
     public function renderLogin(): string
     {
         return $this->template->renderLoginForm();
