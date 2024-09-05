@@ -26,11 +26,12 @@ if (!$authController->isAuthenticated($config['loggedIn'])) {
     } else {
         echo $authController->renderLogin();
     }
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo $gameController->addGame();
 } else {
-    echo $gameController->getGames();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo $gameController->addGame();
+    } else {
+        echo $gameController->getGames();
+    }
 }
 
 
