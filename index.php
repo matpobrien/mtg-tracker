@@ -20,18 +20,18 @@ $authController = new AuthenticationController($userRepository);
 // and stores the cookie
 // every request after will have the cookie attached to it
 if (!$authController->isAuthenticated($config['loggedIn'])) {
-    echo $authController->renderLogin();
-
     $config['loggedIn'] = $authController->login();
     if (!$config['loggedIn']) {
         echo $authController->renderSignup();
+    } else {
+        echo $authController->renderLogin();
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        echo $gameController->addGame();
-    } else {
-        echo $gameController->getGames();
-    }
+    echo $gameController->addGame();
+} else {
+    echo $gameController->getGames();
+}
 
 
 
