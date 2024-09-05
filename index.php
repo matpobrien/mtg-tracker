@@ -20,17 +20,14 @@ $authController = new AuthenticationController($authService);
 // use a secure cookie for storing the jwt when you log in there's a set cookie option and then the browser sees it
 // and stores the cookie
 // every request after will have the cookie attached to it
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($authController->isAuthenticated($config['loggedIn']))
-    {
+if ($authController->isAuthenticated($config['loggedIn']))
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $gameController->addGame();
     } else {
         echo $gameController->getGames();
     }
-    
     $config['loggedIn'] = $authController->login();
-    
-    
 }
 echo $authController->renderLogin();
 
