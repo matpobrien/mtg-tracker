@@ -15,12 +15,12 @@ class LoginTemplate
                <body>
                     <h3>Enter your login credentials</h3>
                     <form action="">
-                          <label for="first">
+                          <label for="username">
                                 Username:
                           </label>
                           <input type="text"
-                                 id="first"
-                                 name="first"
+                                 id="username"
+                                 name="username"
                                  placeholder="Enter your Username" required>
         
                           <label for="password">
@@ -53,12 +53,12 @@ class LoginTemplate
                <body>
                     <h3>Enter your desired credentials</h3>
                     <form action="">
-                          <label for="first">
+                          <label for="username">
                                 Username:
                           </label>
                           <input type="text"
-                                 id="first"
-                                 name="first"
+                                 id="username"
+                                 name="username"
                                  placeholder="Enter your Username" required>
         
                           <label for="password">
@@ -70,7 +70,7 @@ class LoginTemplate
                                  placeholder="Enter your Password" required>
         
                           <div class="wrap">
-                                <button name="login" type="submit" formmethod="post" value="Login">
+                                <button name="signup" type="submit" formmethod="post" value="Signup">
                                       Login
                                 </button>
                           </div>
