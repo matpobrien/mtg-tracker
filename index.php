@@ -29,6 +29,7 @@ if (!$authController->isAuthenticated($config['loggedIn'])) {
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login']) || isset($_POST['signup'])) {
+        echo '<span>$_POST["signup"]</span>';
         if (isset($_POST['signup'])) {
             $config['loggedIn'] = $authController->signup();
         }

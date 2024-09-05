@@ -1,7 +1,7 @@
 <?php
 
 include_once __DIR__ . '/../Repository/UserRepository.php';
-include_once __DIR__ . '/../Entity/';
+include_once __DIR__ . '/../Entity/User.php';
 
 class AuthenticationService
 {
