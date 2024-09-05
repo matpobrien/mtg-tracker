@@ -32,7 +32,7 @@ class LoginTemplate
                                  placeholder="Enter your Password" required>
         
                           <div class="wrap">
-                                <button type="submit">
+                                <button name="login" type="submit">
                                       Login
                                 </button>
                           </div>

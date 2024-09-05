@@ -98,7 +98,7 @@ class MainTemplate {
                                 </label>
                             </td>
                         </tr>
-                        <tr><td><input name='button' type='submit' value='Add Game' formmethod='post'/></td></tr>
+                        <tr><td><input name='addGame' type='submit' value='Add Game' formmethod='post'/></td></tr>
                     </table>
                 </form>
                 <h1> Previous Games</h1>

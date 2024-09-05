@@ -14,7 +14,7 @@ class GameController
     
     public function addGame(): string
     {
-        if (isset($_POST['button'])
+        if (isset($_POST['addGame'])
         ) {
             $postData = $this->getPostData();
             

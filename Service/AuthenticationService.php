@@ -1,21 +1,35 @@
 <?php
 
-include_once __DIR__ . '/Repository/UserRepository.php';
+include_once __DIR__ . '/../Repository/UserRepository.php';
+include_once __DIR__ . '/../Entity/';
 
 class AuthenticationService
 {
+    public function __construct(
+        protected readonly UserRepository $userRepository
+    ){}
+
     public function authenticate(string $username, string $password)
     {
-    
+        $users = $this->userRepository->getUsers();
+        $user = (
+            (new User())
+                ->setUsername($username)
+                ->setPassword($password)
+        )->expose();
+        if (in_array($user, $users, true)) {
+            return setcookie('jwt', $this->generateJwt($username));
+        }
+        return false;
     }
     
-    public function generateJwt(string $username, string $password)
+    public function generateJwt(string $username): string
     {
         // Token structure: header.payload.signature
         
         // Create token header and payload as JSON string
         $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-        $payload = json_encode(['username' => $username, 'password' => $password]);
+        $payload = json_encode(['username' => $username]);
         
         
         // Encode to Base64Url String
@@ -33,16 +47,39 @@ class AuthenticationService
         
         return $base64Header . '.' . $base64Payload . '.' . $base64Signature;
     }
-    // authenticate:
-    // take username and password
-    // return true or false depending on if u:pw pair exists in json
-    // set userId in the cookie
-    // authenticate user before they can do anything
     
-    // create user?
+    public function isAuthenticated(bool $isLoggedIn): bool
+    {
+        if (!$isLoggedIn) {
+            return false;
+        }
+        $jwtArray = explode('.', $_COOKIE['jwt']);
+        $base64Header = $jwtArray[0];
+        $base64Payload = $jwtArray[1];
+        // get payload from jwt
+        
+        // generate new signature
+        $newSignature = hash_hmac(
+            'sha256',
+            $base64Header . '.' . $base64Payload,
+            '849021jasionfjasd9isdopaj1',
+            true
+        );
+        
+        
+        $originalSignature = $jwtArray[2];
+        
+        return strcmp($originalSignature, $newSignature) === 0;
+    }
     
-    // get current user:
-    // for use in controllers and other services
-    // needs to parse the cookie (
-    // can just put the user id in the cookie for now and return the user from the json file
+    public function getCurrentUser()
+    {
+        $jwt = $_COOKIE['jwt'];
+        $jwtArray = explode('.', $_COOKIE['jwt']);
+        $payload = $jwtArray[1];
+        // get the JWT and then decode the payload
+        $username = str_replace(['-', '_', ''], ['+', '/', '='], base64_decode($payload))['username'];
+        
+        $this->userRepository->findUserByUsername($username);
+    }
 }
