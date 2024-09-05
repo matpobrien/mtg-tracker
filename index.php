@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['signup'])) {
             $config['loggedIn'] = $authController->signup();
         }
+        echo '<p>' . $config['loggedIn'] . '</p>';
         $config['loggedIn'] = $authController->login();
     }
         echo $gameController->addGame();
