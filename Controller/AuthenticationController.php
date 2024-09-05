@@ -38,7 +38,7 @@ class AuthenticationController
         $userData = $this->getPostData();
         
         if (
-            null !== $this->userRepository->findUserByUsername($_POST['signup']['username'])
+            null !== $this->userRepository->findUserByUsername($userData['username'])
         ) {
             throw new RuntimeException('User already exists!');
         }
