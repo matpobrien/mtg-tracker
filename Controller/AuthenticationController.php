@@ -21,9 +21,11 @@ class AuthenticationController
             return false;
         }
         
+        $userData = $this->getPostData();
+        
         return $this->authService->authenticate(
-            $_POST['login']['username'],
-            $_POST['login']['password']
+            $userData['username'],
+            $userData['hashedPassword']
         );
     }
     
@@ -33,6 +35,8 @@ class AuthenticationController
             return false;
         }
         
+        $userData = $this->getPostData();
+        
         if (
             null !== $this->userRepository->findUserByUsername($_POST['signup']['username'])
         ) {
@@ -40,13 +44,13 @@ class AuthenticationController
         }
         
         $this->userRepository->addUser(
-            $_POST['signup']['username'],
-            password_hash($_POST['signup']['password'], PASSWORD_DEFAULT)
+            $userData['username'],
+            $userData['hashedPassword']
         );
         
         return $this->authService->authenticate(
-            $_POST['signup']['username'],
-            $_POST['signup']['password']
+            $userData['username'],
+            $userData['hashedPassword']
         );
     }
     
@@ -63,5 +67,19 @@ class AuthenticationController
     public function isAuthenticated(bool $isLoggedIn): bool
     {
         return $this->authService->isAuthenticated($isLoggedIn);
+    }
+    
+    private function getPostData(): array
+    {
+        $username = htmlspecialchars($_POST['username']);
+        $password = password_hash(
+            htmlspecialchars($_POST['opponentsDeck']),
+            PASSWORD_DEFAULT
+        );
+        
+        return [
+            'username' => $username,
+            'hashedPassword' => $password,
+        ];
     }
 }
