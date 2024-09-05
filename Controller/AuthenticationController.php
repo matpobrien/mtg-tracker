@@ -28,6 +28,11 @@ class AuthenticationController
     {
         return $this->template->renderLoginForm();
     }
+
+    public function renderSignup(): string
+    {
+        return $this->template->renderSignupForm();
+    }
     
     public function isAuthenticated(bool $isLoggedIn): bool
     {

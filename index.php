@@ -27,7 +27,9 @@ if ($authController->isAuthenticated($config['loggedIn']))
     } else {
         echo $gameController->getGames();
     }
-    $config['loggedIn'] = $authController->login();
+    if (!$authController->login()) {
+        echo $authController->renderSignup();
+    }
 }
 echo $authController->renderLogin();
 
