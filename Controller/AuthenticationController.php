@@ -27,6 +27,29 @@ class AuthenticationController
         );
     }
     
+    public function signup(): bool
+    {
+        if (!isset($_POST['signup'])) {
+            return false;
+        }
+        
+        if (
+            null !== $this->userRepository->findUserByUsername($_POST['login']['username'])
+        ) {
+            throw new RuntimeException('User already exists!');
+        }
+        
+        $this->userRepository->addUser(
+            $_POST['signup']['username'],
+            password_hash($_POST['signup']['password'], PASSWORD_DEFAULT)
+        );
+        
+        return $this->authService->authenticate(
+            $_POST['signup']['username'],
+            $_POST['signup']['password']
+        );
+    }
+    
     public function renderLogin(): string
     {
         return $this->template->renderLoginForm();
