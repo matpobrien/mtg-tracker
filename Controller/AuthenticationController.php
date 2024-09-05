@@ -1,15 +1,18 @@
 <?php
 
 include_once __DIR__ . '/../Template/LoginTemplate.php';
-include_once __DIR__ .'/../Service/AuthenticationService.php';
+include_once __DIR__ .'/../Repository/UserRepository.php';
+
 class AuthenticationController
 {
     private LoginTemplate $template;
+    private AuthenticationService $authService;
     
     public function __construct(
-        protected readonly AuthenticationService $authService,
+        protected readonly UserRepository $userRepository
     ) {
         $this->template = new LoginTemplate();
+        $this->authService = new AuthenticationService($userRepository);
     }
     
     public function login(): bool

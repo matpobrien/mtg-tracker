@@ -15,24 +15,23 @@ $config = [
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
 $userRepository = new UserRepository($config['usersFileName']);
-$authService = new AuthenticationService($userRepository);
-$authController = new AuthenticationController($authService);
+$authController = new AuthenticationController($userRepository);
 // use a secure cookie for storing the jwt when you log in there's a set cookie option and then the browser sees it
 // and stores the cookie
 // every request after will have the cookie attached to it
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($authController->isAuthenticated($config['loggedIn']))
-    {
-        echo $gameController->addGame();
-    } else {
-        echo $gameController->getGames();
-    }
+if (!$authController->isAuthenticated($config['loggedIn'])) {
+    echo $authController->renderLogin();
+
     $config['loggedIn'] = $authController->login();
     if (!$config['loggedIn']) {
         echo $authController->renderSignup();
     }
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo $gameController->addGame();
+    } else {
+        echo $gameController->getGames();
+    }
 
-echo $authController->renderLogin();
 
 
