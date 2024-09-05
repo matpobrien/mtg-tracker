@@ -73,7 +73,7 @@ class AuthenticationController
     {
         $username = htmlspecialchars($_POST['username']);
         $password = password_hash(
-            htmlspecialchars($_POST['opponentsDeck']),
+            htmlspecialchars($_POST['password']),
             PASSWORD_DEFAULT
         );
         
