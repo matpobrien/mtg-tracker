@@ -36,6 +36,7 @@ echo '<p> User:'. $authController->getCurrentUser()->getUsername() . '</p>';
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 echo '<p>' . json_encode(['authenticated' => $authenticated]) . '</p>';
 echo '<p> Config:' . json_encode($config) . '</p>';
+echo '<p> Cookie:' . json_encode($_COOKIE) . '</p>';
 if (!$authenticated) {
     if ($config['newUser']) {
         echo $authController->renderSignup();
