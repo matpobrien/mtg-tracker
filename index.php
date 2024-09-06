@@ -37,10 +37,10 @@ if ($authenticated) {
         if (isset($_POST['addGame'])) {
             echo $gameController->addGame();
         }
-    } else {
-        echo $authController->renderSignoutButton();
-        echo $gameController->getGames();
     }
+
+    echo $authController->renderSignoutButton();
+    echo $gameController->getGames();
 } else {
     if ($config['newUser']) {
         echo $authController->renderSignup();
