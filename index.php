@@ -24,7 +24,6 @@ $authenticated = $authController->isAuthenticated($config['loggedIn']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['signup'])) {
         $config['newUser'] = !$authController->signup();
-        $authenticated = $authController->isAuthenticated($config['loggedIn']);
         if ($authenticated) {
             echo $gameController->getGames();
         }
@@ -32,12 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
         $loggedIn = $authController->login();
         $config['newUser'] = !$loggedIn;
-        $authenticated = $authController->isAuthenticated($config['loggedIn']);
     }
     if ($authenticated) {
         if (isset($_POST['signout'])) {
             $authController->signout();
-            $authenticated = $authController->isAuthenticated($config['loggedIn']);
         }
         if (isset($_POST['addGame'])) {
             echo $gameController->addGame();
