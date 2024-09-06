@@ -76,7 +76,7 @@ class AuthenticationController
         
         return [
             'username' => $username,
-            'password' => $password,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
         ];
     }
     

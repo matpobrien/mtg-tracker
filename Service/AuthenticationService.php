@@ -11,14 +11,9 @@ class AuthenticationService
 
     public function authenticate(string $username, string $password): bool
     {
-        $users = $this->userRepository->getUsers();
-        $user = (
-            (new User())
-                ->setUsername($username)
-                ->setPassword($password)
-        )->expose();
-        if (in_array($user, $users, true)) {
-            echo '<p>in array</p>';
+        $user = $this->userRepository->findUserByUsername($username);
+        
+        if (password_verify($password, $user->getPassword())) {
             return setcookie('jwt', $this->generateJwt($username));
         }
         return false;
