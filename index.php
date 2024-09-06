@@ -43,9 +43,6 @@ if (!$authenticated) {
 } else {
     echo $gameController->getGames();
 }
-echo '<p> Config:' . json_encode($config) . '</p>';
-echo '<p> Cookie:' . json_encode($_COOKIE) . '</p>';
-echo '<p>' . json_encode(['authenticated' => $authenticated]) . '</p>';
 
 
 

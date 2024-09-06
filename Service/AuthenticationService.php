@@ -68,14 +68,7 @@ class AuthenticationService
         );
         $encoded = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($newSignature));
         
-        
-        echo '<p>' . json_encode(['header' => $base64Header]) . '</p>';
-        echo '<p>' . json_encode(['payload' => $base64Payload]) . '</p>';
-        
-        
         $originalSignature = $jwtArray[2];
-        echo '<p>' . json_encode(['$originalSignature' => $originalSignature]) . '</p>';
-        echo '<p>' . json_encode(['$newSignature' => $newSignature]) . '</p>';
         
         return strcmp($originalSignature, $encoded) === 0;
     }
