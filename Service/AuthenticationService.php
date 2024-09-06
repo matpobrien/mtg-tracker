@@ -79,7 +79,6 @@ class AuthenticationService
                 ->setUsername('none')
                 ->setPassword('13214213');
         }
-        $jwt = $_COOKIE['jwt'];
         $jwtArray = explode('.', $_COOKIE['jwt']);
         $payload = $jwtArray[1];
         // get the JWT and then decode the payload
