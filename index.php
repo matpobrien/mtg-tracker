@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $gameController->addGame();
     }
 }
-echo '<p> User:'. $authController->getCurrentUser()->getUsername() . '</p>';
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 echo '<p>' . json_encode(['authenticated' => $authenticated]) . '</p>';
 echo '<p> Config:' . json_encode($config) . '</p>';
