@@ -52,7 +52,7 @@ if (!$authenticated) {
     }
 }
 
-if ($authenticated && $_SERVER['REQUEST_METHOD'] !== 'POST')
+if ($authenticated)
 {
     echo $authController->renderSignoutButton();
     echo $gameController->getGames();
