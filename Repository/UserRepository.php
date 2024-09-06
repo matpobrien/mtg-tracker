@@ -28,10 +28,8 @@ class UserRepository
             ->setUsername($username)
             ->setPassword($password);
         
-        $encodedUser = json_encode($user->expose());
-        
         $users = $this->getUsers();
-        $users[] = $encodedUser;
+        $users[] = $user->expose();
         file_put_contents($this->fileName, json_encode($users));
     }
     
