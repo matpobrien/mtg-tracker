@@ -74,6 +74,11 @@ class AuthenticationService
     
     public function getCurrentUser(): ?User
     {
+        if (!isset($_COOKIE['jwt'])) {
+            return (new User())
+                ->setUsername('none')
+                ->setPassword('13214213');
+        }
         $jwt = $_COOKIE['jwt'];
         $jwtArray = explode('.', $_COOKIE['jwt']);
         $payload = $jwtArray[1];
