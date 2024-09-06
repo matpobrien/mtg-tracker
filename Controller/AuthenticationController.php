@@ -91,7 +91,7 @@ class AuthenticationController
         
         return [
             'username' => $username,
-            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'password' => $password,
             'hashedPassword' => password_hash($password, PASSWORD_DEFAULT),
         ];
     }
