@@ -54,13 +54,12 @@ class AuthenticationController
         );
     }
     
-    public function signout(): void
+    public function signout(): string
     {
-        if (!isset($_POST['signout'])) {
-            return;
-        }
         unset($_COOKIE['jwt']);
         setcookie('jwt', '', time(), -3600);
+        
+        return $this->renderLogin();
     }
     
     public function renderLogin(): string

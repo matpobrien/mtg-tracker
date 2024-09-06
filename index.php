@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($authenticated) {
         if (isset($_POST['signout'])) {
-            $authController->signout();
+            echo $authController->signout();
             $authenticated = $authController->isAuthenticated($config['loggedIn']);
         }
         if (isset($_POST['addGame'])) {
