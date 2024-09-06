@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $config['newUser'] = !$authController->signup();
         $config['loggedIn'] = isset($_COOKIE['jwt']);
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
-        }
         if ($authenticated) {
             echo $gameController->getGames();
         }
@@ -40,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
         if ($authenticated) {
             echo $gameController->getGames();
+        }
     }
-    
     if ($authenticated) {
         if (isset($_POST['signout'])) {
             $authController->signout();
