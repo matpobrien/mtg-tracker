@@ -13,6 +13,10 @@ class AuthenticationService
     {
         $user = $this->userRepository->findUserByUsername($username);
         
+        if (null === $user) {
+            return false;
+        }
+        
         if (password_verify($password, $user->getPassword())) {
             return setcookie('jwt', $this->generateJwt($username));
         }
