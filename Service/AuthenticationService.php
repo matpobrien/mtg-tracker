@@ -12,7 +12,6 @@ class AuthenticationService
     public function authenticate(string $username, string $password): bool
     {
         $user = $this->userRepository->findUserByUsername($username);
-        echo '<p>' . json_encode(['user' => $user->getUsername()]) . '</p>';
         
         if (null === $user) {
             return false;
@@ -56,6 +55,7 @@ class AuthenticationService
         if (!$isLoggedIn) {
             return false;
         }
+
         $jwtArray = explode('.', $_COOKIE['jwt']);
         $base64Header = $jwtArray[0];
         $base64Payload = $jwtArray[1];
