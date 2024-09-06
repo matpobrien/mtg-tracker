@@ -20,28 +20,32 @@ $authController = new AuthenticationController($userRepository);
 // use a secure cookie for storing the jwt when you log in there's a set cookie option and then the browser sees it
 // and stores the cookie
 // every request after will have the cookie attached to it
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['signup'])) {
-        $config['loggedIn'] = $authController->signup();
-    }
-    if (isset($_POST['login'])) {
-        $login = $authController->login();
-        $config['loggedIn'] = $login;
-        $config['newUser'] = !$login;
-    }
-    if (isset($_POST['addGame'])) {
-        echo $gameController->addGame();
-    }
-} else {
-    $authenticated = $authController->isAuthenticated($config['loggedIn']);
-    if (!$authenticated) {
-        if ($config['newUser']) {
-            echo $authController->renderSignup();
-        } else {
-            echo $authController->renderLogin();
+$authenticated = $authController->isAuthenticated($config['loggedIn']);
+if ($authenticated) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['signup'])) {
+            $config['loggedIn'] = $authController->signup();
+        }
+        if (isset($_POST['login'])) {
+            $login = $authController->login();
+            $config['loggedIn'] = $login;
+            $config['newUser'] = !$login;
+        }
+        if (isset($_POST['signout'])) {
+            $config['loggedIn'] = $authController->signout();
+        }
+        if (isset($_POST['addGame'])) {
+            echo $gameController->addGame();
         }
     } else {
+        echo $authController->renderSignoutButton();
         echo $gameController->getGames();
+    }
+} else {
+    if ($config['newUser']) {
+        echo $authController->renderSignup();
+    } else {
+        echo $authController->renderLogin();
     }
 }
 

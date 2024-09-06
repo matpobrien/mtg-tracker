@@ -79,4 +79,14 @@ class LoginTemplate
             </html>
         HTML;
     }
+    
+    public function renderSignoutButton()
+    {
+        return
+            <<<HTML
+                <button name="signout" type="submit" formmethod="post" value="signout">
+                Signout
+                </button>
+            HTML;
+    }
 }

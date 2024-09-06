@@ -64,9 +64,21 @@ class AuthenticationController
         return $this->template->renderSignupForm();
     }
     
+    public function renderSignoutButton(): string
+    {
+        return $this->template->renderSignoutButton();
+    }
+    
     public function isAuthenticated(bool $isLoggedIn): bool
     {
         return $this->authService->isAuthenticated($isLoggedIn);
+    }
+    
+    public function signout(): bool
+    {
+        unset($_COOKIE['jwt']);
+        setcookie('jwt', '', time(), -3600);
+        return false;
     }
     
     private function getPostData(): array
