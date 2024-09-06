@@ -10,7 +10,7 @@ include_once __DIR__ . '/Service/AuthenticationService.php';
 $config = [
     'gamesFileName' => __DIR__ . '/games.json',
     'usersFileName' => __DIR__ . '/users.json',
-    'loggedIn' => false,
+    'loggedIn' => isset($_COOKIE['jwt']),
 ];
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
@@ -30,7 +30,6 @@ echo '<p> User:'. $authController->getCurrentUser()->getUsername() . '</p>';
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 echo '<p>' . json_encode(['authenticated' => $authenticated]) . '</p>';
 echo '<p> Config:' . json_encode($config) . '</p>';
-echo '<p>' . json_encode(['cookie' => isset($_COOKIE['jwt'])]) . '</p>';
 if (!$authenticated) {
     $authController->renderLogin();
 }
