@@ -28,11 +28,7 @@ if (isset($_POST['login']) || isset($_POST['signup'])) {
 }
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 if (!$authenticated) {
-    if (!$config['loggedIn']) {
-        echo $authController->renderSignup();
-    } else {
-        echo $authController->renderLogin();
-    }
+    $authController->renderLogin();
 }
 if ($authenticated && $_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $gameController->addGame();
