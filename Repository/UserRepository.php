@@ -43,7 +43,9 @@ class UserRepository
         );
         
         if (is_int($key) || is_string($key)) {
-            return $users[$key];
+            return (new User())
+                ->setUsername($users[$key]['username'])
+                ->setPassword($users[$key]['password']);
         }
         
         return null;
