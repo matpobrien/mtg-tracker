@@ -36,7 +36,7 @@ $authenticated = $authController->isAuthenticated($config['loggedIn']);
 echo '<p>' . json_encode(['authenticated' => $authenticated]) . '</p>';
 echo '<p> Config:' . json_encode($config) . '</p>';
 if (!$authenticated) {
-    $authController->renderLogin();
+    echo $authController->renderLogin();
 } else {
     echo $gameController->getGames();
 }
