@@ -82,4 +82,9 @@ class AuthenticationController
             'hashedPassword' => $password,
         ];
     }
+    
+    public function getCurrentUser(): ?User
+    {
+        return $this->authService->getCurrentUser();
+    }
 }
