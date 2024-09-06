@@ -54,6 +54,15 @@ class AuthenticationController
         );
     }
     
+    public function signout(): void
+    {
+        if (!isset($_POST['signout'])) {
+            return;
+        }
+        unset($_COOKIE['jwt']);
+        setcookie('jwt', '', time(), -3600);
+    }
+    
     public function renderLogin(): string
     {
         return $this->template->renderLoginForm();
@@ -72,12 +81,6 @@ class AuthenticationController
     public function isAuthenticated(bool $isLoggedIn): bool
     {
         return $this->authService->isAuthenticated($isLoggedIn);
-    }
-    
-    public function signout(): void
-    {
-        unset($_COOKIE['jwt']);
-        setcookie('jwt', '', time(), -3600);
     }
     
     private function getPostData(): array
