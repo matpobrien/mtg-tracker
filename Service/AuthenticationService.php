@@ -49,9 +49,15 @@ class AuthenticationService
         return $base64Header . '.' . $base64Payload . '.' . $base64Signature;
     }
     
-    public function isAuthenticated(bool $isLoggedIn): bool
+    public function cookieExists(): bool
     {
-        if (!$isLoggedIn) {
+        return isset($_COOKIE['jwt']);
+    }
+    
+    public function isAuthenticated(): bool
+    {
+        // create php unit test for this
+        if (!$this->cookieExists()) {
             return false;
         }
 

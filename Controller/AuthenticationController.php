@@ -6,13 +6,12 @@ include_once __DIR__ .'/../Repository/UserRepository.php';
 class AuthenticationController
 {
     private LoginTemplate $template;
-    private AuthenticationService $authService;
     
     public function __construct(
-        protected readonly UserRepository $userRepository
+        protected readonly UserRepository $userRepository,
+        protected readonly AuthenticationService $authenticationService,
     ) {
         $this->template = new LoginTemplate();
-        $this->authService = new AuthenticationService($userRepository);
     }
     
     public function login(): bool

@@ -15,23 +15,22 @@ $config = [
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
 $userRepository = new UserRepository($config['usersFileName']);
-$authController = new AuthenticationController($userRepository);
-// use a secure cookie for storing the jwt when you log in there's a set cookie option and then the browser sees it
-// and stores the cookie
-// every request after will have the cookie attached to it
-$config['loggedIn'] = isset($_COOKIE['jwt']);
-$authenticated = $authController->isAuthenticated($config['loggedIn']);
+$authService = new AuthenticationService($userRepository);
+$authController = new AuthenticationController($userRepository, $authService);
+
+$authenticated = $authController->isAuthenticated();
+// if ($_SERVER['REQUEST_URI']) {}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$authenticated) {
-        if (isset($_POST['signup'])) {
-            $config['newUser'] = !$authController->signup();
-            $authenticated = $authController->isAuthenticated($config['loggedIn']);
-        }
-        
         if (isset($_POST['login'])) {
+            // http response redirect during login
             $loggedIn = $authController->login();
             $config['newUser'] = !$loggedIn;
-            $authenticated = $authController->isAuthenticated($config['loggedIn']);
+            $authenticated = $authController->isAuthenticated(); // use service
+        }
+        if (isset($_POST['signup'])) {
+            $config['newUser'] = !$authController->signup();
+            $authenticated = $authController->isAuthenticated();
         }
     }
  
@@ -61,3 +60,4 @@ if ($authenticated)
 
 
 
+// tell nginx that independent of path in the request, always execute index.php (steal from taskboard)
