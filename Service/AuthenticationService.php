@@ -67,6 +67,9 @@ class AuthenticationService
             true
         );
         
+        echo '<p>' . json_encode(['header' => $base64Header]) . '</p>';
+        echo '<p>' . json_encode(['payload' => $base64Payload]) . '</p>';
+        
         
         $originalSignature = $jwtArray[2];
         
