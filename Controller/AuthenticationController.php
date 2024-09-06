@@ -45,12 +45,12 @@ class AuthenticationController
         
         $this->userRepository->addUser(
             $userData['username'],
-            $userData['hashedPassword']
+            $userData['password']
         );
         
         return $this->authService->authenticate(
             $userData['username'],
-            $userData['hashedPassword']
+            $userData['password']
         );
     }
     
@@ -72,14 +72,11 @@ class AuthenticationController
     private function getPostData(): array
     {
         $username = htmlspecialchars($_POST['username']);
-        $password = password_hash(
-            htmlspecialchars($_POST['password']),
-            PASSWORD_DEFAULT
-        );
+        $password = htmlspecialchars($_POST['password']);
         
         return [
             'username' => $username,
-            'hashedPassword' => $password,
+            'password' => $password,
         ];
     }
     
