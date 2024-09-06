@@ -40,6 +40,6 @@ class GameRepository
     {
         $json = file_get_contents($this->fileName);
         
-        return json_decode($json);
+        return json_decode($json, true);
     }
 }
