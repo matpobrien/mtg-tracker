@@ -78,8 +78,9 @@ class AuthenticationService
         $jwtArray = explode('.', $_COOKIE['jwt']);
         $payload = $jwtArray[1];
         // get the JWT and then decode the payload
-        $username = str_replace(['-', '_', ''], ['+', '/', '='], base64_decode($payload))['username'];
+        $encodedUsername = (str_replace(['-', '_', ''], ['+', '/', '='], base64_decode($payload)));
+        $username = json_decode($encodedUsername)['username'];
         
-        $this->userRepository->findUserByUsername($username);
+        return $this->userRepository->findUserByUsername($username);
     }
 }
