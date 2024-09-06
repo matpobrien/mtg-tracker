@@ -29,8 +29,7 @@ class AuthenticationController
         );
         
         if ($authenticated) {
-            unset($_SERVER['REQUEST_METHOD']);
-            http_request_method_register('GET');
+            $_SERVER['REQUEST_METHOD'] = 'GET';
         }
         
         return $authenticated;
