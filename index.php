@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (isset($_POST['login'])) {
         $authController->login();
-        $config['newUser'] = !$config['loggedIn'];
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
     }
     
