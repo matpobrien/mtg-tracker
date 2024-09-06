@@ -25,7 +25,7 @@ class AuthenticationController
         
         return $this->authService->authenticate(
             $userData['username'],
-            $userData['hashedPassword']
+            $userData['password']
         );
     }
     

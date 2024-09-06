@@ -15,7 +15,7 @@ class AuthenticationService
         $user = (
             (new User())
                 ->setUsername($username)
-                ->setPassword(password_hash($password, PASSWORD_DEFAULT))
+                ->setPassword($password)
         )->expose();
         if (in_array($user, $users, true)) {
             return setcookie('jwt', $this->generateJwt($username));
