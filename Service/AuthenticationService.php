@@ -72,6 +72,8 @@ class AuthenticationService
         
         
         $originalSignature = $jwtArray[2];
+        echo '<p>' . json_encode(['$originalSignature' => $originalSignature]) . '</p>';
+        echo '<p>' . json_encode(['$newSignature' => $newSignature]) . '</p>';
         
         return strcmp($originalSignature, $newSignature) === 0;
     }
