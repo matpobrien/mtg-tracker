@@ -10,7 +10,7 @@ include_once __DIR__ . '/Service/AuthenticationService.php';
 $config = [
     'gamesFileName' => __DIR__ . '/games.json',
     'usersFileName' => __DIR__ . '/users.json',
-    'loggedIn' => isset($_COOKIE['jwt']),
+    'loggedIn' => false,
 ];
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
