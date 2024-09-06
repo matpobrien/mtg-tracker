@@ -26,7 +26,6 @@ echo '<p>' . json_encode(['Authenticated' => $authenticated]) . '</p>';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['signup'])) {
         $config['newUser'] = !$authController->signup();
-        $config['loggedIn'] = isset($_COOKIE['jwt']);
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
         if ($authenticated) {
             echo $gameController->getGames();
@@ -34,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (isset($_POST['login'])) {
         $loggedIn = $authController->login();
-        $config['loggedIn'] = isset($_COOKIE['jwt']);
         $config['newUser'] = !$loggedIn;
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
         if ($authenticated) {
