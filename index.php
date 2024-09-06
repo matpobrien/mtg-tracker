@@ -21,8 +21,6 @@ $authController = new AuthenticationController($userRepository);
 // and stores the cookie
 // every request after will have the cookie attached to it
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
-echo '<p>' . json_encode(['Cookie' => $_COOKIE['jwt']]) . '</p>';
-echo '<p>' . json_encode(['Authenticated' => $authenticated]) . '</p>';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['signup'])) {
         $config['newUser'] = !$authController->signup();
