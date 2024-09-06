@@ -26,10 +26,11 @@ if (isset($_POST['login']) || isset($_POST['signup'])) {
     echo '<p>' . $config['loggedIn'] . '</p>';
     $config['loggedIn'] = $authController->login();
 }
-echo '<p>'. $authController->getCurrentUser()->getUsername() . '</p>';
+echo '<p> User:'. $authController->getCurrentUser()->getUsername() . '</p>';
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
-echo '<p>' . $authenticated . '</p>';
-echo '<p>' . $config['loggedIn'] . '</p>';
+echo '<p> Authenticated:' . $authenticated . '</p>';
+echo '<p> Config logged in' . $config['loggedIn'] . '</p>';
+echo '<p> Cookie isset:' . isset($_COOKIE['jwt']) . '</p>';
 if (!$authenticated) {
     $authController->renderLogin();
 }
