@@ -28,6 +28,7 @@ if (isset($_POST['login']) || isset($_POST['signup'])) {
 }
 echo '<p>'. $authController->getCurrentUser()->getUsername() . '</p>';
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
+echo '<p>' . $authenticated . '</p>';
 if (!$authenticated) {
     $authController->renderLogin();
 }
