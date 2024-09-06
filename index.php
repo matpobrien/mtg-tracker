@@ -21,32 +21,34 @@ $authController = new AuthenticationController($userRepository);
 // and stores the cookie
 // every request after will have the cookie attached to it
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
-if ($authenticated) {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['signup'])) {
-            $config['loggedIn'] = $authController->signup();
-        }
-        if (isset($_POST['login'])) {
-            $login = $authController->login();
-            $config['loggedIn'] = $login;
-            $config['newUser'] = !$login;
-        }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['signup'])) {
+        $config['loggedIn'] = $authController->signup();
+    }
+    if (isset($_POST['login'])) {
+        $login = $authController->login();
+        $config['loggedIn'] = $login;
+        $config['newUser'] = !$login;
+    }
+    
+    if ($authenticated) {
         if (isset($_POST['signout'])) {
             $config['loggedIn'] = $authController->signout();
         }
-        if (isset($_POST['addGame'])) {
+        if ($authenticated && isset($_POST['addGame'])) {
             echo $gameController->addGame();
         }
     }
-
-    echo $authController->renderSignoutButton();
-    echo $gameController->getGames();
-} else {
+}
+if (!$authenticated) {
     if ($config['newUser']) {
         echo $authController->renderSignup();
     } else {
         echo $authController->renderLogin();
     }
+} else {
+    echo $authController->renderSignoutButton();
+    echo $gameController->getGames();
 }
 
 
