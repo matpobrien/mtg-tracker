@@ -44,7 +44,7 @@ class UserRepository
             array_column($users, 'username')
         );
         
-        echo $key;
+        echo '<p>' . $key . '</p>';
         
         if (is_int($key) || is_string($key)) {
             return $users[$key];
