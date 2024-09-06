@@ -10,7 +10,6 @@ include_once __DIR__ . '/Service/AuthenticationService.php';
 $config = [
     'gamesFileName' => __DIR__ . '/games.json',
     'usersFileName' => __DIR__ . '/users.json',
-    'loggedIn' => isset($_COOKIE['jwt']),
     'newUser' => false,
 ];
 $gameRepository = new GameRepository($config['gamesFileName']);
@@ -20,6 +19,7 @@ $authController = new AuthenticationController($userRepository);
 // use a secure cookie for storing the jwt when you log in there's a set cookie option and then the browser sees it
 // and stores the cookie
 // every request after will have the cookie attached to it
+$config['loggedIn'] = isset($_COOKIE['jwt']);
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['signup'])) {
