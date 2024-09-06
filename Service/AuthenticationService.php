@@ -18,6 +18,7 @@ class AuthenticationService
                 ->setPassword($password)
         )->expose();
         if (in_array($user, $users, true)) {
+            echo '<p>in array</p>';
             return setcookie('jwt', $this->generateJwt($username));
         }
         return false;
