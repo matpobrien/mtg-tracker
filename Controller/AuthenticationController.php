@@ -23,10 +23,17 @@ class AuthenticationController
         
         $userData = $this->getPostData();
         
-        return $this->authService->authenticate(
+        $authenticated = $this->authService->authenticate(
             $userData['username'],
             $userData['password']
         );
+        
+        if ($authenticated) {
+            unset($_SERVER['REQUEST_METHOD']);
+            http_request_method_register('GET');
+        }
+        
+        return $authenticated;
     }
     
     public function signup(): bool
