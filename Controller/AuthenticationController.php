@@ -74,11 +74,10 @@ class AuthenticationController
         return $this->authService->isAuthenticated($isLoggedIn);
     }
     
-    public function signout(): bool
+    public function signout(): void
     {
         unset($_COOKIE['jwt']);
         setcookie('jwt', '', time(), -3600);
-        return false;
     }
     
     private function getPostData(): array
