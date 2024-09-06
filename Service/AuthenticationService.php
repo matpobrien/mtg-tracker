@@ -18,7 +18,7 @@ class AuthenticationService
         }
         
         if (0 === strcmp($password, $user->getPassword())) {
-            $_SERVER['REQUEST_METHOD'] = 'POST';
+            $_SERVER['REQUEST_METHOD'] = 'GET';
             return setcookie('jwt', $this->generateJwt($username));
         }
         return false;
