@@ -12,7 +12,7 @@ class GameController
         $this->template = new MainTemplate();
     }
     
-    public function addGame(): string
+    public function addGame(): void
     {
         if (isset($_POST['addGame'])
         ) {
@@ -25,8 +25,6 @@ class GameController
                 $postData['didWin'],
             );
         }
-        
-        return $this->getGames();
     }
     
     public function getGames(): string
