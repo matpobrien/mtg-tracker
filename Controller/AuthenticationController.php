@@ -45,7 +45,7 @@ class AuthenticationController
         
         $this->userRepository->addUser(
             $userData['username'],
-            $userData['password']
+            $userData['hashedPassword']
         );
         
         return $this->authService->authenticate(
@@ -77,6 +77,7 @@ class AuthenticationController
         return [
             'username' => $username,
             'password' => password_hash($password, PASSWORD_DEFAULT),
+            'hashedPassword' => password_hash($password, PASSWORD_DEFAULT),
         ];
     }
     
