@@ -44,8 +44,6 @@ class UserRepository
             array_column($users, 'username')
         );
         
-        echo '<p>' . json_encode($users) . '</p>';
-        
         if (is_int($key) || is_string($key)) {
             return $users[$key];
         }
