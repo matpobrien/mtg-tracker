@@ -72,7 +72,7 @@ class AuthenticationService
         return strcmp($originalSignature, $newSignature) === 0;
     }
     
-    public function getCurrentUser()
+    public function getCurrentUser(): User
     {
         $jwt = $_COOKIE['jwt'];
         $jwtArray = explode('.', $_COOKIE['jwt']);
