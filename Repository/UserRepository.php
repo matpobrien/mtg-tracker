@@ -37,7 +37,7 @@ class UserRepository
     
     public function findUserByUsername(string $username): ?User
     {
-        $users = $this->getUsers();
+        $users = json_decode($this->getUsers());
         
         $key = array_search(
             $username,
