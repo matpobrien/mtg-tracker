@@ -35,9 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $loggedIn = $authController->login();
         $config['newUser'] = !$loggedIn;
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
-        if ($authenticated) {
-            echo $gameController->getGames();
-        }
     }
     if ($authenticated) {
         if (isset($_POST['signout'])) {
