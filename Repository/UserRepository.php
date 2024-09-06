@@ -19,7 +19,7 @@ class UserRepository
     {
         $json = file_get_contents($this->fileName);
         
-        return json_decode($json);
+        return json_decode($json, true);
     }
     
     public function addUser(string $username, string $password): void
