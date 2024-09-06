@@ -84,9 +84,11 @@ class LoginTemplate
     {
         return
             <<<HTML
-                <button name="signout" type="submit" formmethod="post" value="signout">
-                Signout
-                </button>
+                <form action="">
+                    <button name="signout" type="submit" formmethod="post" value="signout">
+                    Signout
+                    </button>
+                </form>
             HTML;
     }
 }
