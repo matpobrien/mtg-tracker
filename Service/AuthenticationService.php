@@ -12,7 +12,7 @@ class AuthenticationService
     public function authenticate(string $username, string $password): bool
     {
         $user = $this->userRepository->findUserByUsername($username);
-        echo '<p>' . json_encode(['user' => $user->getUsername]) . '</p>';
+        echo '<p>' . json_encode(['user' => $user->getUsername()]) . '</p>';
         
         if (null === $user) {
             return false;
