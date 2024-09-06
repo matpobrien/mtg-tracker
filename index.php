@@ -11,6 +11,7 @@ $config = [
     'gamesFileName' => __DIR__ . '/games.json',
     'usersFileName' => __DIR__ . '/users.json',
     'loggedIn' => isset($_COOKIE['jwt']),
+    'newUser' => false,
 ];
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
@@ -24,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $config['loggedIn'] = $authController->signup();
     }
     if (isset($_POST['login'])) {
-        echo '<p>' . $config['loggedIn'] . '</p>';
         $config['loggedIn'] = $authController->login();
+        $config['newUser'] = !$authController->login();
     }
     if (isset($_POST['addGame'])) {
         echo $gameController->addGame();
@@ -36,7 +37,11 @@ $authenticated = $authController->isAuthenticated($config['loggedIn']);
 echo '<p>' . json_encode(['authenticated' => $authenticated]) . '</p>';
 echo '<p> Config:' . json_encode($config) . '</p>';
 if (!$authenticated) {
-    echo $authController->renderLogin();
+    if ($config['newUser']) {
+        echo $authController->renderSignup();
+    } else {
+        echo $authController->renderLogin();
+    }
 } else {
     echo $gameController->getGames();
 }
