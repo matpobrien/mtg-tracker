@@ -17,6 +17,8 @@ class AuthenticationService
             return false;
         }
         
+        echo '<p>' . json_encode(['passwordVerify' => password_verify($password, $user->getPassword())]) . '</p>';
+        
         if (password_verify($password, $user->getPassword())) {
             return setcookie('jwt', $this->generateJwt($username));
         }
