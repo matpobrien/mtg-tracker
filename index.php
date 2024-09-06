@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
     }
     if (isset($_POST['login'])) {
-        $config['newUser'] = $authController->login();
+        $config['newUser'] = !$authController->login();
         $authenticated = $authController->isAuthenticated($config['loggedIn']);
     }
     
