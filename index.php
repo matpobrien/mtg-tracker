@@ -32,16 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['addGame'])) {
         echo $gameController->addGame();
     }
-}
-$authenticated = $authController->isAuthenticated($config['loggedIn']);
-if (!$authenticated) {
-    if ($config['newUser']) {
-        echo $authController->renderSignup();
-    } else {
-        echo $authController->renderLogin();
-    }
 } else {
-    echo $gameController->getGames();
+    $authenticated = $authController->isAuthenticated($config['loggedIn']);
+    if (!$authenticated) {
+        if ($config['newUser']) {
+            echo $authController->renderSignup();
+        } else {
+            echo $authController->renderLogin();
+        }
+    } else {
+        echo $gameController->getGames();
+    }
 }
 
 
