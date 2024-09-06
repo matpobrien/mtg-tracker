@@ -17,9 +17,7 @@ class AuthenticationService
             return false;
         }
         
-        echo '<p>' . json_encode(['passwordVerify' => strcmp($password, $user->getPassword()) === 0]) . '</p>';
-        
-        if (password_verify($password, $user->getPassword())) {
+        if (0 === strcmp($password, $user->getPassword())) {
             return setcookie('jwt', $this->generateJwt($username));
         }
         return false;
