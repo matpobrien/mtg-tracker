@@ -28,7 +28,7 @@ if (isset($_POST['login']) || isset($_POST['signup'])) {
 }
 echo '<p> User:'. $authController->getCurrentUser()->getUsername() . '</p>';
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
-echo '<p> Authenticated:' . $authenticated . '</p>';
+echo '<p> Authenticated:' . json_encode(['authenticated' => $authenticated]) . '</p>';
 echo '<p> Config logged in:' . $config['loggedIn'] . '</p>';
 echo '<p> Config:' . json_encode($config) . '</p>';
 echo '<p> Cookie isset:' . isset($_COOKIE['jwt']) . '</p>';
