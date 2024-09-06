@@ -23,22 +23,18 @@ $authController = new AuthenticationController($userRepository);
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['signup'])) {
-        $signedUp = $authController->signup();
-        $config['loggedIn'] = $signedUp;
-        $config['newUser'] = !$signedUp;
-        
+        $config['newUser'] = !$authController->signup();
+        $authenticated = $authController->isAuthenticated($config['loggedIn']);
     }
     if (isset($_POST['login'])) {
-        $login = $authController->login();
-        $config['loggedIn'] = $login;
-        $config['newUser'] = !$login;
+        $config['newUser'] = $authController->login();
+        $authenticated = $authController->isAuthenticated($config['loggedIn']);
     }
     
     if ($authenticated) {
         if (isset($_POST['signout'])) {
             $authController->signout();
-            $config['loggedIn'] = false;
-            $authenticated = false;
+            $authenticated = $authController->isAuthenticated($config['loggedIn']);
         }
         if ($authenticated && isset($_POST['addGame'])) {
             echo $gameController->addGame();
