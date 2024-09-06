@@ -23,7 +23,10 @@ $authController = new AuthenticationController($userRepository);
 $authenticated = $authController->isAuthenticated($config['loggedIn']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['signup'])) {
-        $config['loggedIn'] = $authController->signup();
+        $signedUp = $authController->signup();
+        $config['loggedIn'] = $signedUp;
+        $config['newUser'] = !$signedUp;
+        
     }
     if (isset($_POST['login'])) {
         $login = $authController->login();
