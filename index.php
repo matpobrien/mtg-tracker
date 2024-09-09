@@ -19,31 +19,6 @@ $authService = new AuthenticationService($userRepository);
 $authController = new AuthenticationController($userRepository, $authService);
 
 $authenticated = $authController->isAuthenticated();
-// if ($_SERVER['REQUEST_URI']) {}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!$authenticated) {
-        if (isset($_POST['login'])) {
-            // http response redirect during login
-            $loggedIn = $authController->login();
-            $config['newUser'] = !$loggedIn;
-            $authenticated = $authController->isAuthenticated(); // use service
-        }
-        if (isset($_POST['signup'])) {
-            $config['newUser'] = !$authController->signup();
-            $authenticated = $authController->isAuthenticated();
-        }
-    }
- 
-    if ($authenticated) {
-        if (isset($_POST['signout'])) {
-            $authController->signout();
-            $authenticated = $authController->isAuthenticated($config['loggedIn']);
-        }
-        if (isset($_POST['addGame'])) {
-            echo $gameController->addGame();
-        }
-    }
-}
 if (!$authenticated) {
     if ($config['newUser']) {
         echo $authController->renderSignup();
@@ -51,12 +26,57 @@ if (!$authenticated) {
         echo $authController->renderLogin();
     }
 }
+// if ($_SERVER['REQUEST_URI'] === 'login') {
+//     if ($authenticatd) {
+//        http_redirect('/games');
+//     }
+//    if (isset($_POST['login'])) {
+//        // http response redirect during login
+//        $loggedIn = $authController->login();
+//        $config['newUser'] = !$loggedIn;
+//        $authenticated = $authController->isAuthenticated(); // use service
+//
+//        if (!$loggedIn) {
+//           http_redirect('/signup');
+//        }
+//
+//        //redirect
+//        http_redirect('/games');
+//    }
+//
+// }
+// if ($_SERVER['REQUEST_URI'] === 'signup') {
+//    if ($authenticated) {
+//        http_redirect('/games');
+//    }
+//    if (isset($_POST['signup'])) {
+//        $signupSuccessful = !$authController->signup();
+//        $config['newUser'] = !$signupSuccessful;
+//        $authenticated = $authController->isAuthenticated();
+//
+//        if ($signupSuccessful) {
+//            http_redirect('/login');
+//        }
+//    }
+//}
+// if ($_SERVER['REQUEST_URI'] === 'signout') {
+//    if ($authenticated) {
+//        $authController->signout();
+//        $authenticated = $authController->isAuthenticated($config['loggedIn']);
+//        http_redirect('/login');
+//    }
+//}
+// if ($_SERVER['REQUEST_URI'] === 'addGame') {
+//        $gameController->addGame();
+//}
+// if ($_SERVER['REQUEST_URI'] === 'games') {
+//    if ($authenticated) {
+//        echo $authController->renderSignoutButton();
+//        echo $gameController->getGames();
+//    }
+//}
 
-if ($authenticated)
-{
-    echo $authController->renderSignoutButton();
-    echo $gameController->getGames();
-}
+
 
 
 

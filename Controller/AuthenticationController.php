@@ -9,7 +9,7 @@ class AuthenticationController
     
     public function __construct(
         protected readonly UserRepository $userRepository,
-        protected readonly AuthenticationService $authenticationService,
+        protected readonly AuthenticationService $authService,
     ) {
         $this->template = new LoginTemplate();
     }
@@ -78,9 +78,9 @@ class AuthenticationController
         return $this->template->renderSignoutButton();
     }
     
-    public function isAuthenticated(bool $isLoggedIn): bool
+    public function isAuthenticated(): bool
     {
-        return $this->authService->isAuthenticated($isLoggedIn);
+        return $this->authService->isAuthenticated();
     }
     
     private function getPostData(): array
