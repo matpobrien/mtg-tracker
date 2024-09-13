@@ -23,6 +23,7 @@ $authController = new AuthenticationController($userRepository, $authService, $b
 
 
 echo $_SERVER['REQUEST_METHOD'];
+echo $_SERVER['REQUEST_URI'];
 if ($_SERVER['REQUEST_URI'] === 'login') {
      if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
