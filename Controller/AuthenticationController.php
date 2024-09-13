@@ -88,7 +88,7 @@ class AuthenticationController
     
     public function renderSignoutButton(): string
     {
-        return $this->template->renderSignoutButton();
+        return $this->template->renderSignoutButton($this->baseUrl);
     }
     
     private function getPostData(): array
