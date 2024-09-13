@@ -67,6 +67,8 @@ class AuthenticationController
 
         unset($_COOKIE['jwt']);
         setcookie('jwt', '', time(), -3600);
+        
+        http_redirect('/login');
     }
     
     public function renderLogin(): string

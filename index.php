@@ -18,12 +18,12 @@ $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository);
 $authController = new AuthenticationController($userRepository, $authService);
 
-$authenticated = $authService->isAuthenticated();
-if (!$authenticated) {
+
+if (!$authService->isAuthenticated()) {
     http_redirect('/login');
 }
 if ($_SERVER['REQUEST_URI'] === 'login') {
-     if ($authenticated) {
+     if ($authService->isAuthenticated()) {
         http_redirect('/games');
      }
 
@@ -31,25 +31,21 @@ if ($_SERVER['REQUEST_URI'] === 'login') {
         echo $authController->renderLogin();
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authController->login();
-        $authenticated = $authService->isAuthenticated();
     }
 }
 if ($_SERVER['REQUEST_URI'] === 'signup') {
-    if ($authenticated) {
+    if ($authService->isAuthenticated()) {
         http_redirect('/games');
     }
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderSignup();
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authController->signup();
-        $authenticated = $authService->isAuthenticated();
     }
 }
-if ($authenticated) {
+if ($authService->isAuthenticated()) {
     if ($_SERVER['REQUEST_URI'] === 'signout') {
         $authController->signout();
-        $authenticated = $authService->isAuthenticated();
-        http_redirect('/login');
     }
     if ($_SERVER['REQUEST_URI'] === 'addGame') {
         $gameController->addGame();
