@@ -75,7 +75,7 @@ class AuthenticationController
     
     public function renderLogin(): string
     {
-        if (isset($_SERVER['QUERY_STRING']) && 1 === $_SERVER['QUERY_STRING']['failed']) {
+        if (isset($_SERVER['QUERY_STRING'])) {
             return $this->template->renderLoginForm(true);
         }
         return $this->template->renderLoginForm(false);
