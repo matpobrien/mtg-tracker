@@ -75,10 +75,10 @@ class AuthenticationController
     
     public function renderLogin(): string
     {
-        echo $_GET;
-        if (1 === $_GET['failed']) {
-            return $this->template->renderLoginForm(true);
-        }
+        var_dump($_GET);
+//        if (1 === $_GET['failed']) {
+//            return $this->template->renderLoginForm(true);
+//        }
         return $this->template->renderLoginForm(false);
     }
 
