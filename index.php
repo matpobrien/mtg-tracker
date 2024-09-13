@@ -47,6 +47,10 @@ if ($requestUri === 'signup') {
     }
 }
 if ($requestUri === 'games') {
+    if (!$authService->isAuthenticated()) {
+        header("Location: " . $baseUrl . 'login');
+        exit;
+    }
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderSignoutButton();
         echo $gameController->getGames();
