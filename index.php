@@ -21,10 +21,10 @@ $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository, $baseUrl);
 $authController = new AuthenticationController($userRepository, $authService, $baseUrl);
 
-if (!$authService->isAuthenticated()) {
-    header("Location: " . $baseUrl . 'login');
-    exit;
-}
+//if (!$authService->isAuthenticated()) {
+//    header("Location: " . $baseUrl . 'login');
+//    exit;
+//}
 if ($_SERVER['REQUEST_URI'] === 'login') {
      if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
