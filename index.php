@@ -56,4 +56,7 @@ if ($requestUri === 'games') {
 }
 if ($requestUri === 'signout') {
     $authController->signout();
+    
+    header("Location: " . $this->baseUrl . 'login');
+    exit;
 }
