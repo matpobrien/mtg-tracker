@@ -21,10 +21,7 @@ $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository, $baseUrl);
 $authController = new AuthenticationController($userRepository, $authService, $baseUrl);
 
-//if (!$authService->isAuthenticated()) {
-//    header("Location: " . $baseUrl . 'login');
-//    exit;
-//}
+
 if ($_SERVER['REQUEST_URI'] === 'login') {
      if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
@@ -48,7 +45,10 @@ if ($_SERVER['REQUEST_URI'] === 'signup') {
         $authController->signup();
     }
 }
-if ($authService->isAuthenticated()) {
+if (!$authService->isAuthenticated()) {
+    header("Location: " . $baseUrl . 'login');
+    exit;
+} else {
     if ($_SERVER['REQUEST_URI'] === 'signout') {
         $authController->signout();
     }
