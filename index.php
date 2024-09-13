@@ -21,7 +21,6 @@ $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository, $baseUrl);
 $authController = new AuthenticationController($userRepository, $authService, $baseUrl);
 
-
 if (!$authService->isAuthenticated()) {
     header("Location: " . $baseUrl . 'login');
 }
