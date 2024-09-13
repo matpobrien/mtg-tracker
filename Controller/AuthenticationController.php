@@ -75,7 +75,7 @@ class AuthenticationController
     
     public function renderLogin(): string
     {
-        var_dump($_GET);
+        echo json_encode($_GET);
 //        if (1 === $_GET['failed']) {
 //            return $this->template->renderLoginForm(true);
 //        }
