@@ -21,22 +21,23 @@ $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository, $baseUrl);
 $authController = new AuthenticationController($userRepository, $authService, $baseUrl);
 
+$requestUri = mb_substr($_SERVER['REQUEST_URI'], 1);
 
 echo $_SERVER['REQUEST_METHOD'];
 echo $_SERVER['REQUEST_URI'];
-if ($_SERVER['REQUEST_URI'] === 'login') {
+if ($requestUri === 'login') {
      if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
         exit;
      }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($requestUri === 'GET') {
         echo $authController->renderLogin();
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authController->login();
     }
 }
-if ($_SERVER['REQUEST_URI'] === 'signup') {
+if ($requestUri === 'signup') {
     if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
         exit;
@@ -51,13 +52,15 @@ if ($_SERVER['REQUEST_URI'] === 'signup') {
 //    header("Location: " . $baseUrl . 'login');
 //    exit;
 //} else {
-    if ($_SERVER['REQUEST_URI'] === 'signout') {
+    if ($requestUri === 'signout') {
         $authController->signout();
     }
-    if ($_SERVER['REQUEST_URI'] === 'addGame') {
+    if ($requestUri === 'addGame') {
         $gameController->addGame();
+        header("Location: " . $baseUrl . 'games');
+        exit;
     }
-    if ($_SERVER['REQUEST_URI'] === 'games') {
+    if ($requestUri === 'games') {
         echo $authController->renderSignoutButton();
         echo $gameController->getGames();
     }

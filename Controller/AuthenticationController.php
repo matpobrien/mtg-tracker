@@ -70,6 +70,7 @@ class AuthenticationController
         setcookie('jwt', '', time(), -3600);
         
         header("Location: " . $this->baseUrl . 'login');
+        exit;
     }
     
     public function renderLogin(): string
