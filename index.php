@@ -54,6 +54,6 @@ if ($requestUri === 'games') {
         $gameController->addGame();
     }
 }
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signout'])) {
+if ($requestUri === 'signout') {
     $authController->signout();
 }
