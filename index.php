@@ -16,7 +16,7 @@ $env = parse_ini_file('.env');
 $baseUrl = $env['BASE_URL'];
 
 $gameRepository = new GameRepository($config['gamesFileName']);
-$gameController = new GameController($gameRepository);
+$gameController = new GameController($gameRepository, $baseUrl);
 $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository, $baseUrl);
 $authController = new AuthenticationController($userRepository, $authService, $baseUrl);
@@ -46,20 +46,14 @@ if ($requestUri === 'signup') {
         $authController->signup();
     }
 }
-//if (!$authService->isAuthenticated()) {
-//    header("Location: " . $baseUrl . 'login');
-//    exit;
-//} else {
-    if ($requestUri === 'signout') {
-        $authController->signout();
-    }
-    if ($requestUri === 'addGame') {
-        $gameController->addGame();
-        header("Location: " . $baseUrl . 'games');
-        exit;
-    }
-    if ($requestUri === 'games') {
+if ($requestUri === 'games') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderSignoutButton();
         echo $gameController->getGames();
+    } else {
+        $gameController->addGame();
     }
-//}
+}
+if ($requestUri === 'signout') {
+    $authController->signout();
+}

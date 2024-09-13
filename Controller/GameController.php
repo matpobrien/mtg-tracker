@@ -8,6 +8,7 @@ class GameController
     private MainTemplate $template;
     public function __construct(
         protected readonly GameRepository $gameRepository,
+        protected readonly string $baseUrl
     ) {
         $this->template = new MainTemplate();
     }
@@ -25,6 +26,9 @@ class GameController
                 $postData['didWin'],
             );
         }
+        
+        header("Location: " . $this->baseUrl . 'games');
+        exit;
     }
     
     public function getGames(): string
