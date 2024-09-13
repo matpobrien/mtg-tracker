@@ -63,7 +63,6 @@ class AuthenticationController
     public function signout(): void
     {
         if (!isset($_POST['signout'])) {
-            echo 'not set';
             return;
         }
 
