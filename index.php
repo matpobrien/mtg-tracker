@@ -45,10 +45,10 @@ if ($_SERVER['REQUEST_URI'] === 'signup') {
         $authController->signup();
     }
 }
-if (!$authService->isAuthenticated()) {
-    header("Location: " . $baseUrl . 'login');
-    exit;
-} else {
+//if (!$authService->isAuthenticated()) {
+//    header("Location: " . $baseUrl . 'login');
+//    exit;
+//} else {
     if ($_SERVER['REQUEST_URI'] === 'signout') {
         $authController->signout();
     }
@@ -59,4 +59,4 @@ if (!$authService->isAuthenticated()) {
         echo $authController->renderSignoutButton();
         echo $gameController->getGames();
     }
-}
+//}
