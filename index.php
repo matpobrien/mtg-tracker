@@ -25,6 +25,7 @@ $requestUri = mb_substr($_SERVER['REQUEST_URI'], 1);
 
 echo $_SERVER['REQUEST_METHOD'];
 echo $_SERVER['REQUEST_URI'];
+echo $requestUri;
 if ($requestUri === 'login') {
      if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
