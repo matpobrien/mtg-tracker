@@ -18,66 +18,44 @@ $userRepository = new UserRepository($config['usersFileName']);
 $authService = new AuthenticationService($userRepository);
 $authController = new AuthenticationController($userRepository, $authService);
 
-$authenticated = $authController->isAuthenticated();
+$authenticated = $authService->isAuthenticated();
 if (!$authenticated) {
-    if ($config['newUser']) {
-        echo $authController->renderSignup();
-    } else {
+    http_redirect('/login');
+}
+if ($_SERVER['REQUEST_URI'] === 'login') {
+     if ($authenticated) {
+        http_redirect('/games');
+     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderLogin();
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $authController->login();
+        $authenticated = $authService->isAuthenticated();
     }
 }
-// if ($_SERVER['REQUEST_URI'] === 'login') {
-//     if ($authenticatd) {
-//        http_redirect('/games');
-//     }
-//    if (isset($_POST['login'])) {
-//        // http response redirect during login
-//        $loggedIn = $authController->login();
-//        $config['newUser'] = !$loggedIn;
-//        $authenticated = $authController->isAuthenticated(); // use service
-//
-//        if (!$loggedIn) {
-//           http_redirect('/signup');
-//        }
-//
-//        //redirect
-//        http_redirect('/games');
-//    }
-//
-// }
-// if ($_SERVER['REQUEST_URI'] === 'signup') {
-//    if ($authenticated) {
-//        http_redirect('/games');
-//    }
-//    if (isset($_POST['signup'])) {
-//        $signupSuccessful = !$authController->signup();
-//        $config['newUser'] = !$signupSuccessful;
-//        $authenticated = $authController->isAuthenticated();
-//
-//        if ($signupSuccessful) {
-//            http_redirect('/login');
-//        }
-//    }
-//}
-// if ($_SERVER['REQUEST_URI'] === 'signout') {
-//    if ($authenticated) {
-//        $authController->signout();
-//        $authenticated = $authController->isAuthenticated($config['loggedIn']);
-//        http_redirect('/login');
-//    }
-//}
-// if ($_SERVER['REQUEST_URI'] === 'addGame') {
-//        $gameController->addGame();
-//}
-// if ($_SERVER['REQUEST_URI'] === 'games') {
-//    if ($authenticated) {
-//        echo $authController->renderSignoutButton();
-//        echo $gameController->getGames();
-//    }
-//}
-
-
-
-
-
-// tell nginx that independent of path in the request, always execute index.php (steal from taskboard)
+if ($_SERVER['REQUEST_URI'] === 'signup') {
+    if ($authenticated) {
+        http_redirect('/games');
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo $authController->renderSignup();
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $authController->signup();
+        $authenticated = $authService->isAuthenticated();
+    }
+}
+if ($authenticated) {
+    if ($_SERVER['REQUEST_URI'] === 'signout') {
+        $authController->signout();
+        $authenticated = $authService->isAuthenticated();
+        http_redirect('/login');
+    }
+    if ($_SERVER['REQUEST_URI'] === 'addGame') {
+        $gameController->addGame();
+    }
+    if ($_SERVER['REQUEST_URI'] === 'games') {
+        echo $authController->renderSignoutButton();
+        echo $gameController->getGames();
+    }
+}

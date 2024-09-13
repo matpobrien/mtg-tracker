@@ -4,8 +4,15 @@ class LoginTemplate
 {
     public function __construct() {}
     
-    public function renderLoginForm(): string
+    public function renderLoginForm(bool $loginFailed): string
     {
+        $errorMessage = '';
+        if ($loginFailed) {
+            $errorMessage = <<<HTML
+                <h3>Login Failed: Invalid Credentials</h3>
+            HTML;
+        }
+        
         return <<<HTML
             <html lang="">
                 <head>
@@ -13,6 +20,7 @@ class LoginTemplate
                 </head>
                 
                <body>
+                    $errorMessage
                     <h3>Enter your login credentials</h3>
                     <form action="">
                           <label for="username">

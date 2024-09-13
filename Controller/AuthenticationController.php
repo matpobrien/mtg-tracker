@@ -14,24 +14,27 @@ class AuthenticationController
         $this->template = new LoginTemplate();
     }
     
-    public function login(): bool
+    public function login(): void
     {
         if (!isset($_POST['login'])) {
-            return false;
+            return;
         }
         
         $userData = $this->getPostData();
         
-        return $this->authService->authenticate(
+        
+        $authenticated = $this->authService->authenticate(
             $userData['username'],
             $userData['password']
         );
+
+        $this->authService->handleAuthenticationResults($authenticated);
     }
     
-    public function signup(): bool
+    public function signup(): void
     {
         if (!isset($_POST['signup'])) {
-            return false;
+            return;
         }
         
         $userData = $this->getPostData();
@@ -47,12 +50,15 @@ class AuthenticationController
             $userData['password']
         );
         
-        return $this->authService->authenticate(
+        $authenticated = $this->authService->authenticate(
             $userData['username'],
             $userData['password']
         );
+        
+        $this->authService->handleAuthenticationResults($authenticated);
     }
-    
+
+
     public function signout(): void
     {
         if (!isset($_POST['signout'])) {
@@ -65,7 +71,10 @@ class AuthenticationController
     
     public function renderLogin(): string
     {
-        return $this->template->renderLoginForm();
+        if (1 === $_GET['failed']) {
+            return $this->template->renderLoginForm(true);
+        }
+        return $this->template->renderLoginForm(false);
     }
 
     public function renderSignup(): string
@@ -78,11 +87,6 @@ class AuthenticationController
         return $this->template->renderSignoutButton();
     }
     
-    public function isAuthenticated(): bool
-    {
-        return $this->authService->isAuthenticated();
-    }
-    
     private function getPostData(): array
     {
         $username = htmlspecialchars($_POST['username']);
@@ -93,10 +97,5 @@ class AuthenticationController
             'password' => $password,
             'hashedPassword' => password_hash($password, PASSWORD_DEFAULT),
         ];
-    }
-    
-    public function getCurrentUser(): ?User
-    {
-        return $this->authService->getCurrentUser();
     }
 }

@@ -5,23 +5,28 @@ include_once __DIR__ . '/../Entity/User.php';
 
 class AuthenticationService
 {
+    public const NONEXISTENT_USER = "NONEXISTENT_USER";
+    public const INVALID_CREDENTIALS = "INVALID_CREDENTIALS";
+    public const AUTHENTICATED = "AUTHENTICATED";
+    
     public function __construct(
         protected readonly UserRepository $userRepository
     ){}
 
-    public function authenticate(string $username, string $password): bool
+    public function authenticate(string $username, string $password): string
     {
         $user = $this->userRepository->findUserByUsername($username);
         
         if (null === $user) {
-            return false;
+            return self::NONEXISTENT_USER;
         }
         
         if (0 === strcmp($password, $user->getPassword())) {
             $_SERVER['REQUEST_METHOD'] = 'GET';
-            return setcookie('jwt', $this->generateJwt($username));
+            setcookie('jwt', $this->generateJwt($username));
+            return self::AUTHENTICATED;
         }
-        return false;
+        return self::INVALID_CREDENTIALS;
     }
     
     public function generateJwt(string $username): string
@@ -94,5 +99,20 @@ class AuthenticationService
         $username = json_decode($encodedUsername, true)['username'];
         
         return $this->userRepository->findUserByUsername($username);
+    }
+    
+    public function handleAuthenticationResults(string $authenticationResults): void
+    {
+        if ($authenticationResults === self::AUTHENTICATED) {
+            http_redirect('/games');
+        }
+        
+        if ($authenticationResults === self::INVALID_CREDENTIALS) {
+            http_redirect('/login?failed=1');
+        }
+        
+        if ($authenticationResults === self::NONEXISTENT_USER) {
+            http_redirect('/signup');
+        }
     }
 }
