@@ -23,10 +23,12 @@ $authController = new AuthenticationController($userRepository, $authService, $b
 
 if (!$authService->isAuthenticated()) {
     header("Location: " . $baseUrl . 'login');
+    exit;
 }
 if ($_SERVER['REQUEST_URI'] === 'login') {
      if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
+        exit;
      }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -38,6 +40,7 @@ if ($_SERVER['REQUEST_URI'] === 'login') {
 if ($_SERVER['REQUEST_URI'] === 'signup') {
     if ($authService->isAuthenticated()) {
         header("Location: " . $baseUrl . 'games');
+        exit;
     }
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderSignup();

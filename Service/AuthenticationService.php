@@ -107,15 +107,17 @@ class AuthenticationService
 
         if ($authenticationResults === self::AUTHENTICATED) {
             header("Location: " . $this->baseUrl . 'games');
+            exit;
         }
         
         if ($authenticationResults === self::INVALID_CREDENTIALS) {
             header("Location: " . $this->baseUrl . 'login?failed=1');
-            
+            exit;
         }
         
         if ($authenticationResults === self::NONEXISTENT_USER) {
             header("Location: " . $this->baseUrl . 'signup');
+            exit;
         }
     }
 }
