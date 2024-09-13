@@ -29,7 +29,7 @@ if ($requestUri === 'login') {
         exit;
      }
 
-    if ($requestUri === 'GET') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderLogin();
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authController->login();
