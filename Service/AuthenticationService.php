@@ -10,7 +10,8 @@ class AuthenticationService
     public const AUTHENTICATED = "AUTHENTICATED";
     
     public function __construct(
-        protected readonly UserRepository $userRepository
+        protected readonly UserRepository $userRepository,
+        protected string $baseUrl
     ){}
 
     public function authenticate(string $username, string $password): string
@@ -103,16 +104,18 @@ class AuthenticationService
     
     public function handleAuthenticationResults(string $authenticationResults): void
     {
+
         if ($authenticationResults === self::AUTHENTICATED) {
-            http_redirect('/games');
+            header("Location: " . $this->baseUrl . 'games');
         }
         
         if ($authenticationResults === self::INVALID_CREDENTIALS) {
-            http_redirect('/login?failed=1');
+            header("Location: " . $this->baseUrl . 'login?failed=1');
+            
         }
         
         if ($authenticationResults === self::NONEXISTENT_USER) {
-            http_redirect('/signup');
+            header("Location: " . $this->baseUrl . 'signup');
         }
     }
 }

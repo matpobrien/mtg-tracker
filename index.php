@@ -12,19 +12,22 @@ $config = [
     'usersFileName' => __DIR__ . '/users.json',
     'newUser' => false,
 ];
+$env = parse_ini_file('.env');
+$baseUrl = $env['BASE_URL'];
+
 $gameRepository = new GameRepository($config['gamesFileName']);
 $gameController = new GameController($gameRepository);
 $userRepository = new UserRepository($config['usersFileName']);
-$authService = new AuthenticationService($userRepository);
-$authController = new AuthenticationController($userRepository, $authService);
+$authService = new AuthenticationService($userRepository, $baseUrl);
+$authController = new AuthenticationController($userRepository, $authService, $baseUrl);
 
 
 if (!$authService->isAuthenticated()) {
-    http_redirect('/login');
+    header("Location: " . $baseUrl . 'login');
 }
 if ($_SERVER['REQUEST_URI'] === 'login') {
      if ($authService->isAuthenticated()) {
-        http_redirect('/games');
+        header("Location: " . $baseUrl . 'games');
      }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -35,7 +38,7 @@ if ($_SERVER['REQUEST_URI'] === 'login') {
 }
 if ($_SERVER['REQUEST_URI'] === 'signup') {
     if ($authService->isAuthenticated()) {
-        http_redirect('/games');
+        header("Location: " . $baseUrl . 'games');
     }
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $authController->renderSignup();

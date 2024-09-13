@@ -10,6 +10,7 @@ class AuthenticationController
     public function __construct(
         protected readonly UserRepository $userRepository,
         protected readonly AuthenticationService $authService,
+        protected string $baseUrl
     ) {
         $this->template = new LoginTemplate();
     }
@@ -68,7 +69,7 @@ class AuthenticationController
         unset($_COOKIE['jwt']);
         setcookie('jwt', '', time(), -3600);
         
-        http_redirect('/login');
+        header("Location: " . $this->baseUrl . 'login');
     }
     
     public function renderLogin(): string
