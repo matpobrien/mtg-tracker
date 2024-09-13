@@ -93,7 +93,7 @@ class LoginTemplate
         $signout = $baseUrl . '/signout';
         return
             <<<HTML
-                <a href="$baseUrl">
+                <a href=$baseUrl>
                     <button>
                     Signout
                     </button>
