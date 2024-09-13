@@ -88,15 +88,16 @@ class LoginTemplate
         HTML;
     }
     
-    public function renderSignoutButton()
+    public function renderSignoutButton(string $baseUrl): string
     {
+        $signout = $baseUrl . '/signout';
         return
             <<<HTML
-                <form action="">
-                    <button name="signout" type="submit" formmethod="post" value="signout">
+                <a href="$baseUrl">
+                    <button>
                     Signout
                     </button>
-                </form>
+                </a>
             HTML;
     }
 }
